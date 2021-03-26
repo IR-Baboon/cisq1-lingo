@@ -1,0 +1,48 @@
+@startuml
+
+Class Game{
+    id: String
+    score: int
+}
+
+Class Round{
+    id: String
+    wordToGuess: Word
+}
+
+Class Word{
+    value: String
+    length: Int
+}
+
+Class Feedback {
+    attempt: Word
+}
+
+Enum Hint{
+    CORRECT
+    ABSENT
+    PRESENT
+    INVALID
+}
+
+Enum Status{
+    WAITING
+    PLAYING
+    DEFEATED
+}
+
+Class User{
+    id: String
+    email: String
+    name: String
+    password: String
+}
+
+Game -left- User : player >
+Game -right- Status : gameStatus
+Game -- Round : round >
+Round -- Word : wordToGuess
+Round -left- Feedback : guesses
+Feedback -down- Hint : hint per letter
+@enduml
