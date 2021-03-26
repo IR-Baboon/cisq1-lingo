@@ -19,7 +19,7 @@ Class Feedback {
     attempt: Word
 }
 
-Enum Hint{
+Enum Mark{
     CORRECT
     ABSENT
     PRESENT
@@ -44,5 +44,7 @@ Game -right- Status : gameStatus
 Game -- Round : round >
 Round -- Word : wordToGuess
 Round -left- Feedback : guesses
-Feedback -down- Hint : hint per letter
+Feedback -down- Mark : hint per letter
+
+
 @enduml
