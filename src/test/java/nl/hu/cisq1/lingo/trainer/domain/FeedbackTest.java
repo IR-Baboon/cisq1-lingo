@@ -1,9 +1,14 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidFeedBackException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,29 +16,52 @@ class FeedbackTest {
 
     @Test
     @DisplayName("word is guessed if all letters are correct")
-    void wordIsGuessed(){
+    void wordIsGuessed() throws InvalidFeedBackException {
         Feedback feedback = new Feedback("woord", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
         assertTrue(feedback.isWordGuessed());
     }
     @Test
     @DisplayName("word is not guessed if all letters are not correct")
-    void wordIsNotGuessed(){
-        Feedback feedback = new Feedback("woord", List.of(Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
+    void wordIsNotGuessed() throws InvalidFeedBackException {
+        Feedback feedback = new Feedback("aoord", List.of(Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
         assertFalse(feedback.isWordGuessed());
     }
 
     @Test
     @DisplayName("guess is not valid when its length is not the same as the word to guess")
-    void guessIsInvalid(){
+    void guessIsInvalid() throws InvalidFeedBackException {
         Feedback feedback = new Feedback("woorden", List.of(Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID));
         assertTrue(feedback.guessIsInvalid());
+
     }
 
     @Test
     @DisplayName("guess is valid when its length is the same as the word to guess")
-    void guessIsNotInvalid(){
+    void guessIsNotInvalid() throws InvalidFeedBackException {
         Feedback feedback = new Feedback("woord", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT));
         assertFalse(feedback.guessIsInvalid());
     }
 
+    @Test
+    @DisplayName("Constructor throws InvalidFeedbackException exception when word and marksize do not correspond")
+    void constructorThrowsExcpetion() throws InvalidFeedBackException {
+        assertThrows( InvalidFeedBackException.class,
+                () -> new Feedback("woord", List.of(Mark.CORRECT)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideHintExamples")
+    @DisplayName("feedback provides a hint based on the letters guess right")
+    void giveHint( String previousHint, String wordToGuess, Feedback feedback, String expected) throws InvalidFeedBackException {
+        String hint = feedback.giveHint(previousHint, wordToGuess );
+        assertEquals(expected, hint);
+    }
+
+    static Stream<Arguments> provideHintExamples() throws InvalidFeedBackException {
+        return Stream.of(
+                Arguments.of("b....", "baard",  new Feedback("bloem", List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT)), "b...."),
+                Arguments.of("b....", "baard",  new Feedback("bloed", List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT)), "b...d"),
+                Arguments.of("b....", "baard",  new Feedback("baard", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)), "baard")
+        );
+    }
 }
