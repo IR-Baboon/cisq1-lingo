@@ -6,8 +6,9 @@ Class Game{
 }
 
 Class Round{
-    id: String
-    wordToGuess: Word
+    roundNumber: int
+    wordToGuess: String
+    hint: String
 }
 
 Class Word{
@@ -16,7 +17,7 @@ Class Word{
 }
 
 Class Feedback {
-    attempt: Word
+    attempt: String
 }
 
 Enum Mark{
@@ -26,7 +27,7 @@ Enum Mark{
     INVALID
 }
 
-Enum Status{
+Enum RoundStatus{
     WAITING
     PLAYING
     DEFEATED
@@ -39,12 +40,11 @@ Class User{
     password: String
 }
 
-Game -left- User : player >
-Game -right- Status : gameStatus
-Game -- Round : round >
-Round -- Word : wordToGuess
-Round -left- Feedback : guesses
-Feedback -down- Mark : hint per letter
+Game -down- User : player
+Game -left- RoundStatus : roundStatus
+Game -right- Round : rounds
+Round -down- Feedback : guesses
+Feedback -right- Mark : marks
 
 
 @enduml

@@ -49,19 +49,32 @@ class FeedbackTest {
                 () -> new Feedback("woord", List.of(Mark.CORRECT)));
     }
 
+    @Test
+    @DisplayName("giveHint() throws InvalidFeedbackException exception when attempt length and hint length do not correspond")
+    void giveHintThrowsExcpetion() throws InvalidFeedBackException {
+        assertThrows( InvalidFeedBackException.class,
+                () -> new Feedback("woord", List.of(Mark.CORRECT)).giveHint("wxxxx"));
+    }
+    @Test
+    @DisplayName("giveHint() throws InvalidFeedbackException exception when marks do not correspond with previousHint")
+    void giveHintThrowsExcpetionTestTwo() throws InvalidFeedBackException {
+        assertThrows( InvalidFeedBackException.class,
+                () -> new Feedback("woord", List.of(Mark.CORRECT)).giveHint("w...."));
+    }
+
     @ParameterizedTest
     @MethodSource("provideHintExamples")
     @DisplayName("feedback provides a hint based on the letters guess right")
-    void giveHint( String previousHint, String wordToGuess, Feedback feedback, String expected) throws InvalidFeedBackException {
-        String hint = feedback.giveHint(previousHint, wordToGuess );
+    void giveHint( String previousHint,  Feedback feedback, String expected) throws InvalidFeedBackException {
+        String hint = feedback.giveHint(previousHint);
         assertEquals(expected, hint);
     }
 
     static Stream<Arguments> provideHintExamples() throws InvalidFeedBackException {
         return Stream.of(
-                Arguments.of("b....", "baard",  new Feedback("bloem", List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT)), "b...."),
-                Arguments.of("b....", "baard",  new Feedback("bloed", List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT)), "b...d"),
-                Arguments.of("b....", "baard",  new Feedback("baard", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)), "baard")
+                Arguments.of("b....", new Feedback("bloem", List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT)), "b...."),
+                Arguments.of("b....", new Feedback("bloed", List.of(Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT)), "b...d"),
+                Arguments.of("b....", new Feedback("baard", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)), "baard")
         );
     }
 }

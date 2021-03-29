@@ -48,24 +48,24 @@ public class Feedback {
                 '}';
     }
 
-    public String giveHint(String previousHint, String wordToGuess){
-        char[] previous = previousHint.toCharArray();
-        char[] gameword = wordToGuess.toCharArray();
-
-        for(int letter = 0; letter < gameword.length; letter += 1){
-            if(gameword[letter] != previous[letter]){
-                if(marks.get(letter) == Mark.CORRECT){
-                    previous[letter] = gameword[letter];
-                }
+    public String giveHint(String previousHint) throws InvalidFeedBackException {
+        // size of previous hint and attempt or marks do not match
+        if(previousHint.length() != attempt.length() || previousHint.length() != marks.size()){
+            // throw exception
+            throw InvalidFeedBackException.invalidMarks();
+        }
+        // transform de vorige hint naar een charArray.
+        // Hierin gaan we letters veranderen als een mark op CORRECT staat.
+        char[] hint = previousHint.toCharArray();
+        // for loop om door de markeringen heen te loopen. De loop stopt
+        for(int index = 0; index < attempt.length(); index++){
+            // als de markering
+            if(marks.get(index) == Mark.CORRECT){
+                hint[index] = attempt.charAt(index);
             }
         }
-        return String.valueOf(previous);
+        // geef de nieuwe hint terug
+        return String.valueOf(hint);
     }
 
-    public static Boolean correct(String woord){
-        return true;
-    }
-    public static Boolean invalid(String woord){
-        return true;
-    }
 }
