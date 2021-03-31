@@ -170,7 +170,7 @@
                                                 COVEREDRATIO
                                             </value>
                                             <minimum>
-                                                0.90
+                                                0.60
                                             </minimum>
                                         </limit>
                                         <limit>
@@ -181,7 +181,7 @@
                                                 COVEREDRATIO
                                             </value>
                                             <minimum>
-                                                0.90
+                                                0.60
                                             </minimum>
                                         </limit>
                                         <limit>
