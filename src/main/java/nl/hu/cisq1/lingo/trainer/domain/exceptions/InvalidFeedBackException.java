@@ -10,13 +10,12 @@ public class InvalidFeedBackException extends RuntimeException{
         super(message);
     }
 
-    public static InvalidFeedBackException wrongLength(String woord, List<Mark> marks){
+    public static InvalidFeedBackException wrongLength(){
         return new InvalidFeedBackException(
-                String.format(
-                        "Given wordlength (%s) and marks length (%s) don't match",
-                        woord.length(),
-                        marks.size()
-                )
+
+                        "Given wordlength and marks length don't match"
+
+
         );
     }
     public static InvalidFeedBackException invalidMarks(){

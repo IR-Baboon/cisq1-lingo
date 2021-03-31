@@ -12,7 +12,7 @@ public class Feedback {
 
     public Feedback(String attempt, List<Mark> marks) throws InvalidFeedBackException {
         if(attempt.length() != marks.size()){
-            throw InvalidFeedBackException.wrongLength(attempt, marks);
+            throw InvalidFeedBackException.wrongLength();
         }
         this.attempt = attempt;
         this.marks = marks;

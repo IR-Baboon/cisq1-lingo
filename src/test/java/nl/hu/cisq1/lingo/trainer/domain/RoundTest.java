@@ -25,7 +25,7 @@ class RoundTest {
         round.guess("wort2");
         round.guess("wort3");
         round.guess("wort4");
-        assertThrows(InvalidGuessException.class, () ->  round.guess("woord"));
+        assertThrows(InvalidGuessException.playerDefeated().getClass(), () ->  round.guess("woord"));
     }
     @Test
     @DisplayName("when word has been guessed, round is over and no more guesses can be made. If so, an Exceptio will be thrown")
@@ -33,7 +33,7 @@ class RoundTest {
         Round round = new Round("woord", 1);
         round.guess("woord");
         round.giveHint();
-        assertThrows(InvalidGuessException.class, () ->  round.guess("woord"));
+        assertThrows(InvalidGuessException.noMoreGuesses().getClass(), () ->  round.guess("woord"));
     }
 
     @Test

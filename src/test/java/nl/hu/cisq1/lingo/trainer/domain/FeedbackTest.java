@@ -45,7 +45,7 @@ class FeedbackTest {
     @Test
     @DisplayName("Constructor throws InvalidFeedbackException exception when word and marksize do not correspond")
     void constructorThrowsExcpetion() throws InvalidFeedBackException {
-        assertThrows( InvalidFeedBackException.class,
+        assertThrows( InvalidFeedBackException.wrongLength().getClass(),
                 () -> new Feedback("woord", List.of(Mark.CORRECT)));
     }
 
@@ -58,7 +58,7 @@ class FeedbackTest {
     @Test
     @DisplayName("giveHint() throws InvalidFeedbackException exception when marks do not correspond with previousHint")
     void giveHintThrowsExcpetionTestTwo() throws InvalidFeedBackException {
-        assertThrows( InvalidFeedBackException.class,
+        assertThrows( InvalidFeedBackException.invalidMarks().getClass(),
                 () -> new Feedback("woord", List.of(Mark.CORRECT)).giveHint("w...."));
     }
 
