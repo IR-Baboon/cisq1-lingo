@@ -1,1 +1,1 @@
-# CISQ1: Lingo Trainer
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lexcomesdev_cisq1-lingo&metric=alert_status)](https://sonarcloud.io/dashboard?id=lexcomesdev_cisq1-lingo)
