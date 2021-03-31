@@ -24,17 +24,7 @@ public class Feedback {
         return this.marks.stream().anyMatch(mark -> mark == Mark.INVALID);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Feedback)) return false;
-        Feedback feedback = (Feedback) o;
-        return attempt.equals(feedback.attempt) &&
-                marks.equals(feedback.marks);
-    }
-
-
-
+    
     public String giveHint(String previousHint) throws InvalidFeedBackException {
         // size of previous hint and attempt or marks do not match
         if(previousHint.length() != attempt.length() || previousHint.length() != marks.size()){
