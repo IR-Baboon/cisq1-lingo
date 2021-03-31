@@ -65,7 +65,6 @@ public class Game {
         return new Progress(getScore(), round.getFeedbackHistory() , round.giveHint());
     }
 
-
     public boolean isPlayerDefeated(){
         return gameStatus == GameStatus.DEFEAT;
     }
@@ -90,6 +89,4 @@ public class Game {
         }
 
     }
-
-
 }
