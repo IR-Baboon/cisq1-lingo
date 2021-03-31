@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidRoundException;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidWordException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -97,9 +98,16 @@ class GameTest {
         }
 
         @Test
+        void roundNumberTwoThrows(){
+            game.guess("woord");
+
+            assertThrows(InvalidWordException.invalidLength().getClass(),
+            () ->  game.startNewRound("woord"));
+        }
+        @Test
         void roundNumberTwo(){
             game.guess("woord");
-            game.startNewRound("woord");
+            game.startNewRound("woorde");
             assertEquals(2, game.getCurrentRound().getRoundNumber());
         }
 

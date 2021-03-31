@@ -2,6 +2,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidGuessException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidRoundException;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidWordException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,13 @@ public class Game {
 
     public void startNewRound(String wordToGuess){
         if(!isPlaying() && !isPlayerDefeated()){
-            Round newRound = new Round(wordToGuess, rounds.size() + 1);
-            rounds.add(newRound);
-            gameStatus = GameStatus.PLAYING;
+            if (provideNextWordLength() != wordToGuess.length()) {
+                throw InvalidWordException.invalidLength();
+            }else{
+                Round newRound = new Round(wordToGuess, rounds.size() + 1);
+                rounds.add(newRound);
+                gameStatus = GameStatus.PLAYING;
+            }
         }else{
             throw InvalidRoundException.roundActive();
         }
@@ -86,13 +91,5 @@ public class Game {
 
     }
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                "id='" + id + '\'' +
-                ", score=" + score +
-                ", gameStatus=" + gameStatus +
-                ", rounds=" + rounds +
-                '}';
-    }
+
 }

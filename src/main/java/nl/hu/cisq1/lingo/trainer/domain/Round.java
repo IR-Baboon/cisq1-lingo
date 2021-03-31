@@ -90,13 +90,5 @@ public class Round {
         return wordToGuess.length();
     }
 
-    @Override
-    public String toString() {
-        return "Round{" +
-                "roundNumber=" + roundNumber +
-                ", wordToGuess='" + wordToGuess + '\'' +
-                ", hint='" + hint + '\'' +
-                ", attempts=" + attempts +
-                '}';
-    }
+
 }

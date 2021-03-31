@@ -35,18 +35,7 @@ public class Feedback {
                 marks.equals(feedback.marks);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(attempt, marks);
-    }
 
-    @Override
-    public String toString() {
-        return "Feedback{" +
-                "attempt='" + attempt + '\'' +
-                ", marks=" + marks +
-                '}';
-    }
 
     public String giveHint(String previousHint) throws InvalidFeedBackException {
         // size of previous hint and attempt or marks do not match
