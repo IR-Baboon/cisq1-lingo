@@ -19,7 +19,7 @@ class RoundTest {
     @Test
     @DisplayName("make 5 guesses and then try to make another guess, asserting a throw")
     void noMoreAttempts() {
-        Round round = new Round("woord");
+        Round round = new Round("woord", 1);
         round.guess("wort5");
         round.guess("wort1");
         round.guess("wort2");
@@ -30,7 +30,7 @@ class RoundTest {
     @Test
     @DisplayName("when word has been guessed, round is over and no more guesses can be made. If so, an Exceptio will be thrown")
     void wordGuessedNoMoreAttempts() {
-        Round round = new Round("woord");
+        Round round = new Round("woord", 1);
         round.guess("woord");
         round.giveHint();
         assertThrows(InvalidGuessException.class, () ->  round.guess("woord"));
@@ -39,13 +39,13 @@ class RoundTest {
     @Test
     @DisplayName("Start new Round and create hint to assert it is the starting hint")
     void giveHintWithNoAttempt() {
-        Round round = new Round("woord");
+        Round round = new Round("woord", 1);
         assertEquals("w....", round.giveHint());
     }
     @Test
     @DisplayName("validates that the right hint is given after a guess")
     void giveHintWithAttempt() {
-        Round round = new Round("woord");
+        Round round = new Round("woord", 1);
         round.guess("waare");
         assertEquals("w..r.", round.giveHint());
     }
@@ -54,7 +54,7 @@ class RoundTest {
     @MethodSource("provideGuessExamples")
     @DisplayName("checks if all marks are right -- parameterized")
     void marksAreValid(String wordToGuess, String attempt, Feedback expectedFeedback) {
-        Round round = new Round(wordToGuess);
+        Round round = new Round(wordToGuess, 1);
         round.guess(attempt);
         Feedback feedback = round.getFeedbackHistory().get(0);
         assertEquals(expectedFeedback, feedback);

@@ -9,19 +9,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Round {
+//    private Game game;
+    private int roundNumber;
     private String wordToGuess;
     private String hint;
     private List<Feedback> attempts;
 
-    public Round(String wordToGuess) {
+    public Round(String wordToGuess, int roundNumber) {
+        this.roundNumber = roundNumber;
         this.wordToGuess = wordToGuess;
         this.hint = this.wordToGuess.charAt(0) + ".".repeat(wordToGuess.length() -1);
         attempts = new ArrayList<>();
     }
 
-    public void guess(String attempt) throws InvalidGuessException {
-        if(attempts.size() > 4 || hint.equals(wordToGuess)){
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+
+    public Feedback guess(String attempt) throws InvalidGuessException {
+        if(attempts.size() > 4 ){
             throw InvalidGuessException.noMoreGuesses();
+        }else if(getFeedbackHistory().stream().anyMatch(Feedback::isWordGuessed)){
+            throw InvalidGuessException.wordIsGuessed();
         }
         List<Mark> marks = new ArrayList<>();
         for(int index = 0; index < attempt.length(); index++){
@@ -57,6 +66,7 @@ public class Round {
         // add feedback to list
         attempts.add(feedback);
         this.giveHint();
+        return feedback;
     }
 
     public String giveHint(){
@@ -80,4 +90,13 @@ public class Round {
         return wordToGuess.length();
     }
 
+    @Override
+    public String toString() {
+        return "Round{" +
+                "roundNumber=" + roundNumber +
+                ", wordToGuess='" + wordToGuess + '\'' +
+                ", hint='" + hint + '\'' +
+                ", attempts=" + attempts +
+                '}';
+    }
 }

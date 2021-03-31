@@ -19,11 +19,6 @@ public class InvalidFeedBackException extends RuntimeException{
                 )
         );
     }
-    public static InvalidFeedBackException invalidHintWordCombo(){
-        return new InvalidFeedBackException(
-                "Hint does not match."
-        );
-    }
     public static InvalidFeedBackException invalidMarks(){
         return new InvalidFeedBackException(
                         "Either given marks or attempt length does not match length word to guess."

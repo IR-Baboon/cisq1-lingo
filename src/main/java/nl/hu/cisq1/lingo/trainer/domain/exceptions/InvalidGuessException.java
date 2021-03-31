@@ -7,7 +7,17 @@ public class InvalidGuessException extends RuntimeException {
 
     public static InvalidGuessException noMoreGuesses(){
         return new InvalidGuessException(
-                "Round is over, guesses are Empty"
+                "Round is over, attempts are empty"
+        );
+    }
+    public static InvalidGuessException wordIsGuessed(){
+        return new InvalidGuessException(
+                "Round is over. The word has been guessed"
+        );
+    }
+    public static InvalidGuessException playerDefeated(){
+        return new InvalidGuessException(
+                "Round is over. You have been eliminated."
         );
     }
 }
