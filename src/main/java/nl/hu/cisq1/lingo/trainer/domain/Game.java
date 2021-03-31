@@ -1,66 +1,99 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidGuessException;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidRoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Game {
+    private String id;
     private int score;
     private GameStatus gameStatus;
     private List<Round> rounds;
 
-    private Game(){
+    public Game(){
+        this.id = UUID.randomUUID().toString();
         this.score = 0;
         gameStatus = GameStatus.WAITING;
         rounds = new ArrayList<>();
     }
 
     public Round getCurrentRound(){
-        return rounds.get(rounds.size()-1);
+        if(rounds.size() > 0){
+            return rounds.get(rounds.size() -1);
+        }
+        return null;
     }
 
     public void startNewRound(String wordToGuess){
-        Round newRound = new Round(wordToGuess);
-        rounds.add(newRound);
-        gameStatus = GameStatus.PLAYING;
+        if(!isPlaying() && !isPlayerDefeated()){
+            Round newRound = new Round(wordToGuess, rounds.size() + 1);
+            rounds.add(newRound);
+            gameStatus = GameStatus.PLAYING;
+        }else{
+            throw InvalidRoundException.roundActive();
+        }
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public void guess(String attempt){
-        try{
-            getCurrentRound().guess(attempt);
-        }catch (InvalidGuessException error){
-            gameStatus = GameStatus.DEFEAT;
-        }
+            if(isPlaying()){
+                Feedback feedback = getCurrentRound().guess(attempt);
+                if(feedback.isWordGuessed()){
+                    gameStatus = GameStatus.WAITING;
+                    score += (5 * (5 - getCurrentRound().getAttempts()) + 5);
+                }else if(getCurrentRound().getAttempts() == 5 && !feedback.isWordGuessed()){
+                    gameStatus = GameStatus.DEFEAT;
+                }
+            }else if(isPlayerDefeated()){
+                throw InvalidGuessException.playerDefeated();
+            }
+    }
 
-    }
-    public void addScore(Round round){
-        score += (5 * (5 - round.getAttempts()) + 5);
-    }
     public Progress showProgress(){
         Round round = getCurrentRound();
-        Progress progress = new Progress(score, round.getFeedbackHistory() , round.giveHint());
-        return progress;
+        return new Progress(getScore(), round.getFeedbackHistory() , round.giveHint());
+
     }
+
 
     public boolean isPlayerDefeated(){
         return gameStatus == GameStatus.DEFEAT;
     }
+
     public boolean isPlaying(){
-        return gameStatus != GameStatus.PLAYING;
+        return gameStatus == GameStatus.PLAYING;
     }
+
     public int provideNextWordLength(){
-        if(rounds.size() == 0){
+        Round round = getCurrentRound();
+        if(round != null){
+            switch (round.getCurrentWordLength()){
+                case 5:
+                    return 6;
+                case 6:
+                    return 7;
+                default:
+                    return 5;
+            }
+        }else{
             return 5;
         }
-        Round round = getCurrentRound();
-         switch (round.getCurrentWordLength()){
-            case 5:
-                return 6;
-            case 6:
-                return 7;
-             default:
-                return 5;
-        }
+
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id='" + id + '\'' +
+                ", score=" + score +
+                ", gameStatus=" + gameStatus +
+                ", rounds=" + rounds +
+                '}';
     }
 }
