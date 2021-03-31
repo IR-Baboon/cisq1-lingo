@@ -16,6 +16,7 @@ class GameTest {
     private Game game;
 
     @BeforeEach
+    @DisplayName("before all and each test, create a game")
     void createNewGame(){
         game = new Game();
     }
@@ -50,6 +51,7 @@ class GameTest {
     class GameRoundTestClass {
 
         @BeforeEach
+        @DisplayName("before each test in this nested class, start a new round")
         void createNewRound(){
             game.startNewRound("woord");
         }
@@ -125,6 +127,7 @@ class GameTest {
     @DisplayName("Test progress return")
     class GameProgressTestClass {
         @BeforeEach
+        @DisplayName("before each nested test class in this nested class, start a new round so that the progress can be checked.")
         void createNewRound(){
             game.startNewRound("brood");
         }
@@ -156,6 +159,7 @@ class GameTest {
         @DisplayName("Test Progress after a guess")
         class GameProgressTestAfterGuess {
             @BeforeEach
+            @DisplayName("before each test in this nested class, make a guess")
             void makeOneGuess(){
                 game.guess("braam");
             }
@@ -184,6 +188,7 @@ class GameTest {
         @DisplayName("Test Progress after winning a Round")
         class GameProgressTestAfterWin {
             @BeforeEach
+            @DisplayName("before each test in this nested class, Win the game")
             void winGame(){
                 game.guess("brood");
             }
@@ -211,6 +216,7 @@ class GameTest {
         @DisplayName("Test Progress in the beginning")
         class GameProgressTestAfterLoss {
             @BeforeEach
+            @DisplayName("before each test in this nested class, lose the game")
             void loseGame(){
                 game.guess("welke");
                 game.guess("waard");
