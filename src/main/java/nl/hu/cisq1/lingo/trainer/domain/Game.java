@@ -22,7 +22,7 @@ public class Game {
     }
 
     public Round getCurrentRound(){
-        if(rounds.size() > 0){
+        if(!rounds.isEmpty()){
             return rounds.get(rounds.size() -1);
         }
         return null;

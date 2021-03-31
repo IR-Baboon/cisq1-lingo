@@ -1,8 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidFeedBackException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidGuessException;
-import nl.hu.cisq1.lingo.words.domain.Word;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -71,7 +69,7 @@ public class Round {
 
     public String giveHint(){
         // check if the list size is more than 0
-        if(attempts.size() > 0){
+        if(!attempts.isEmpty()){
             // get the last item in attempts
             hint = attempts.get(attempts.size()-1).giveHint(hint);
         }

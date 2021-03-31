@@ -1,9 +1,5 @@
 package nl.hu.cisq1.lingo.trainer.domain.exceptions;
 
-import nl.hu.cisq1.lingo.trainer.domain.Mark;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.List;
 
 public class InvalidFeedBackException extends RuntimeException{
     public InvalidFeedBackException(String message){
