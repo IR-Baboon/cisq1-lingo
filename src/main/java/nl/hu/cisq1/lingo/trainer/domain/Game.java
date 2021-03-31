@@ -58,7 +58,6 @@ public class Game {
     public Progress showProgress(){
         Round round = getCurrentRound();
         return new Progress(getScore(), round.getFeedbackHistory() , round.giveHint());
-
     }
 
 

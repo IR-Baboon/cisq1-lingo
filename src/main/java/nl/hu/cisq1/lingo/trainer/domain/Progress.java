@@ -13,5 +13,15 @@ public class Progress {
         this.hint = hint;
     }
 
+    public int getScore() {
+        return score;
+    }
 
+    public List<Feedback> getFeedbackList() {
+        return feedbackList;
+    }
+
+    public String getHint() {
+        return hint;
+    }
 }

@@ -21,8 +21,8 @@ class GameTest {
     }
 
     @Nested
-    @DisplayName("test starting")
-    class TestStartingPoint {
+    @DisplayName("test starting values when creating a game")
+    class GameInitTestClass {
 
         @Test
         void testStatusNotPlaying(){
@@ -45,8 +45,9 @@ class GameTest {
     }
 
     @Nested
+    @DisplayName("Test creating a new round and completing it")
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-    class StartNewRound {
+    class GameRoundTestClass {
 
         @BeforeEach
         void createNewRound(){
@@ -59,36 +60,18 @@ class GameTest {
         }
 
         @Test
-        void testStatusPlaying(){
+        void testStatusIsPlaying(){
             assertTrue(game.isPlaying());
         }
         @Test
+        void testStatusIsNotPlaying(){
+            game.guess("woord");
+            assertFalse(game.isPlaying());
+        }
+
+        @Test
         void testStatusNotDefeated(){
             assertFalse(game.isPlayerDefeated());
-        }
-
-        @Test
-        void roundNumber(){
-            assertEquals(1, game.getCurrentRound().getRoundNumber());
-        }
-        @Test
-        void testScoreBefore(){
-            assertEquals(0, game.getScore());
-        }
-        @Test
-        void roundNumberTwo(){
-            game.guess("woord");
-            game.startNewRound("woord");
-            assertEquals(2, game.getCurrentRound().getRoundNumber());
-        }
-
-        @ParameterizedTest
-        @MethodSource("provideScoreExamples")
-        void testScoreAfterGuesses(List<String> guesses, int expectedScore){
-            for(String guess : guesses){
-                game.guess(guess);
-            }
-            assertEquals(expectedScore, game.getScore());
         }
 
         @Test
@@ -101,6 +84,32 @@ class GameTest {
             assertTrue(game.isPlayerDefeated());
         }
 
+        @Test
+        void roundNumber(){
+            assertEquals(1, game.getCurrentRound().getRoundNumber());
+        }
+
+        @Test
+        void testScoreBefore(){
+            assertEquals(0, game.getScore());
+        }
+
+        @Test
+        void roundNumberTwo(){
+            game.guess("woord");
+            game.startNewRound("woord");
+            assertEquals(2, game.getCurrentRound().getRoundNumber());
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideScoreExamples")
+        void testScore(List<String> guesses, int expectedScore){
+            for(String guess : guesses){
+                game.guess(guess);
+            }
+            assertEquals(expectedScore, game.getScore());
+        }
+
         private Stream<Arguments> provideScoreExamples(){
             return Stream.of(
                     Arguments.of(List.of("woord"), 25),
@@ -110,6 +119,124 @@ class GameTest {
                     Arguments.of(List.of("sloot","sloot","sloot","sloot","woord"), 5),
                     Arguments.of(List.of("sloot","sloot","sloot","sloot","sloot"), 0)
             );
+        }
+    }
+    @Nested
+    @DisplayName("Test progress return")
+    class GameProgressTestClass {
+        @BeforeEach
+        void createNewRound(){
+            game.startNewRound("brood");
+        }
+
+        @Nested
+        @DisplayName("Test Progress in the beginning")
+        class GameProgressTestBeginning {
+            @Test
+            @DisplayName("test score in Progress after starting new Round")
+            void testScoreProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals(0, progress.getScore());
+            }
+            @Test
+            @DisplayName("test score in Progress after starting new Round")
+            void testHintProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals("b....", progress.getHint());
+            }
+            @Test
+            @DisplayName("test score in Progress after starting new Round")
+            void testFeedbackListProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals(0, progress.getFeedbackList().size());
+            }
+        }
+
+        @Nested
+        @DisplayName("Test Progress after a guess")
+        class GameProgressTestAfterGuess {
+            @BeforeEach
+            void makeOneGuess(){
+                game.guess("braam");
+            }
+
+            @Test
+            @DisplayName("test score in Progress after a guess")
+            void testScoreProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals(0, progress.getScore());
+            }
+            @Test
+            @DisplayName("test score in Progress after a guess")
+            void testHintProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals("br...", progress.getHint());
+            }
+            @Test
+            @DisplayName("test score in Progress after a guess")
+            void testFeedbackListProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals(1, progress.getFeedbackList().size());
+            }
+        }
+
+        @Nested
+        @DisplayName("Test Progress after winning a Round")
+        class GameProgressTestAfterWin {
+            @BeforeEach
+            void winGame(){
+                game.guess("brood");
+            }
+            @Test
+            @DisplayName("test score in Progress after winning a Round")
+            void testScoreProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals(25, progress.getScore());
+            }
+            @Test
+            @DisplayName("test score in Progress after winning a Round")
+            void testHintProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals("brood", progress.getHint());
+            }
+            @Test
+            @DisplayName("test score in Progress after winning a Round")
+            void testFeedbackListProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals(1, progress.getFeedbackList().size());
+            }
+        }
+
+        @Nested
+        @DisplayName("Test Progress in the beginning")
+        class GameProgressTestAfterLoss {
+            @BeforeEach
+            void loseGame(){
+                game.guess("welke");
+                game.guess("waard");
+                game.guess("worde");
+                game.guess("brons");
+                game.guess("plons");
+            }
+
+            @Test
+            @DisplayName("test score in Progress after losing a Round")
+            void testScoreProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals(0, progress.getScore());
+            }
+            @Test
+            @DisplayName("test score in Progress after losing a Round")
+            void testHintProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals("bro.d", progress.getHint());
+            }
+            @Test
+            @DisplayName("test score in Progress after losing a Round")
+            void testFeedbackListProgressBeginning(){
+                Progress progress = game.showProgress();
+                assertEquals(5, progress.getFeedbackList().size());
+            }
         }
     }
 }
