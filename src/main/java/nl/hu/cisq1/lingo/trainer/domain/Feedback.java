@@ -3,8 +3,6 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidFeedBackException;
 
 import java.util.List;
-import java.util.Objects;
-
 
 public class Feedback {
     private String attempt;
