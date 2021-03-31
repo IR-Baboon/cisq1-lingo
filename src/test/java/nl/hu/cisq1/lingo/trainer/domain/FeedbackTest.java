@@ -53,7 +53,7 @@ class FeedbackTest {
     @DisplayName("giveHint() throws InvalidFeedbackException exception when attempt length and hint length do not correspond")
     void giveHintThrowsExcpetion() throws InvalidFeedBackException {
         assertThrows( InvalidFeedBackException.class,
-                () -> new Feedback("woors", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)).giveHint("wxxxx"));
+                () -> new Feedback("woorse", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)).giveHint("wxxxx"));
     }
     @Test
     @DisplayName("giveHint() throws InvalidFeedbackException exception when marks do not correspond with previousHint")
