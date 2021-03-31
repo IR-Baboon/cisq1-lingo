@@ -4,9 +4,11 @@ import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidGuessException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidRoundException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidWordException;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 
 public class Game {
     private String id;

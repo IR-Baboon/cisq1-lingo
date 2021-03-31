@@ -24,7 +24,7 @@ public class Feedback {
         return this.marks.stream().anyMatch(mark -> mark == Mark.INVALID);
     }
 
-    
+
     public String giveHint(String previousHint) throws InvalidFeedBackException {
         // size of previous hint and attempt or marks do not match
         if(previousHint.length() != attempt.length() || previousHint.length() != marks.size()){
