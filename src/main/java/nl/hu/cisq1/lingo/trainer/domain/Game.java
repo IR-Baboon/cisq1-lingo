@@ -3,18 +3,38 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidGuessException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidRoundException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidWordException;
+import org.hibernate.annotations.Cascade;
 
-import javax.persistence.Entity;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
+@Entity
+@Table(name = "game")
 public class Game {
+    @Id
     private String id;
+
     private int score;
+
+    @Column(name="game_status")
+    @Enumerated(EnumType.STRING)
     private GameStatus gameStatus;
+
+    @OneToMany
+    @JoinColumn
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Round> rounds;
+
+    public String getId() {
+        return id;
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
 
     public Game(){
         this.id = UUID.randomUUID().toString();

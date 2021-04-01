@@ -1,14 +1,25 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.converters.MarkConverter;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidFeedBackException;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+
 public class Feedback {
+    @Id
+    @GeneratedValue
+    private int id;
+
     private String attempt;
+
+    @Convert(converter = MarkConverter.class)
     private List<Mark> marks;
 
+    public Feedback(){}
     public Feedback(String attempt, List<Mark> marks) throws InvalidFeedBackException {
         if(attempt.length() != marks.size()){
             throw InvalidFeedBackException.wrongLength();
@@ -54,5 +65,5 @@ public class Feedback {
         return Objects.equals(attempt, feedback.attempt) &&
                 Objects.equals(marks, feedback.marks);
     }
-    
+
 }

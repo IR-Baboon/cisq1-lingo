@@ -3,15 +3,28 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidGuessException;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Round {
-//    private Game game;
+
+    @Id
+    @GeneratedValue
+    private int id;
+
     private int roundNumber;
+
     private String wordToGuess;
+
     private String hint;
+
+    @OneToMany
+    @JoinColumn
     private List<Feedback> attempts;
+
+    public Round(){}
 
     public Round(String wordToGuess, int roundNumber) {
         this.roundNumber = roundNumber;
@@ -87,6 +100,5 @@ public class Round {
     public int getCurrentWordLength(){
         return wordToGuess.length();
     }
-
 
 }
