@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.words.application;
 
+import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.words.data.SpringWordRepository;
 import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,12 @@ public class WordService {
         return this.wordRepository
                 .findRandomWordByLength(length)
                 .orElseThrow(() -> new WordLengthNotSupportedException(length))
+                .getValue();
+    }
+    public String provideWordCheck(String attempt) throws NotFoundException {
+        return this.wordRepository
+                .findByValue(attempt)
+                .orElseThrow(() -> new NotFoundException("woord niet gevonden"))
                 .getValue();
     }
 }
