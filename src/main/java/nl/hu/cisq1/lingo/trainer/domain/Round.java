@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Round {
@@ -44,40 +45,84 @@ public class Round {
             throw InvalidGuessException.wordIsGuessed();
         }
         List<Mark> marks = new ArrayList<>();
+        String word = wordToGuess;
         for(int index = 0; index < attempt.length(); index++){
-
-            if(attempt.length() != wordToGuess.length()) {
+            if(word.length() != attempt.length()){
                 marks.add(Mark.INVALID);
-            }
-            else  if(attempt.charAt(index) == wordToGuess.charAt(index)){
+            } else if(isLetterCorrect(word, attempt, index)){
                 marks.add(Mark.CORRECT);
-            }
-            else if(attempt.charAt(index) != wordToGuess.charAt(index) && wordToGuess.contains(attempt.substring(index, index +1))){
-                // This 2 following lines i used a built in method from the Spring Framwork.
-                // It counts the occurences of a character in a String and return it as an integer.
-                // In this line the method checks how many times this letter has already passed in the attempt.
-                // it slices the attempt to the point of index and then counts the chars in both words.
-                int amountAttemptLetter = StringUtils.countOccurrencesOf(attempt.substring(0, index +1), attempt.substring(index, index +1));
-                // in this line we check the total amount of the letter in the wordToGuess
-                int amountRoundWordLetter = StringUtils.countOccurrencesOf(wordToGuess, attempt.substring(index, index +1));
-                // if the amount in attempt(so far including this step) is lower than in wordToGuess
-                if(amountAttemptLetter <= amountRoundWordLetter){
+            }else if(word.contains(attempt.substring(index, index+1))){
+                if(isLetterPresent(word, attempt, index)){
                     marks.add(Mark.PRESENT);
-                // if it is more, make an Absent mark and add it to the list
                 }else{
                     marks.add(Mark.ABSENT);
                 }
-            // if letters dont match and wordToGuess does not contain the letter
             }else{
                 marks.add(Mark.ABSENT);
             }
         }
+
         // create feedback and put the attempt and list of marks in it
         Feedback feedback = new Feedback(attempt, marks);
         // add feedback to list
         attempts.add(feedback);
         this.giveHint();
         return feedback;
+    }
+
+    public boolean isLetterPresent(String word, String attempt, int index){
+        // turn all into chars and charArrays and pick out the letter of importance
+        char[] wordArray = word.toCharArray();
+        char[] attemptArray = attempt.toCharArray();
+        char letter = attemptArray[index];
+
+
+        // create lists for indexes wich are the same letters and a list for letters wich will not be correct
+        List<Integer> indexWordNumbers = new ArrayList<>();
+        List<Integer> indexAttemptNumbers = new ArrayList<>();
+        List<Integer> notCorrectList = new ArrayList<>();
+        // create a loop and check both words if indexLetter matches letter of importance
+        // if so, add the index of the matching letter to the corresponding lists
+        for(int idx = 0; idx < attempt.length(); idx++){
+            if(wordArray[idx] == letter){
+                indexWordNumbers.add(idx);
+            }
+            if(attemptArray[idx] == letter){
+                indexAttemptNumbers.add(idx);
+            }
+        }
+
+        // loop through the index lists and check if indexes are the same.
+        // If not, add index of the attempt list to the notCorrectList.
+        for(Integer idxX: indexAttemptNumbers){
+            for(Integer idxY : indexWordNumbers){
+                if(idxX == idxY){
+                    System.out.println(" ");
+                    break;
+                }else if(!notCorrectList.contains(idxX)){
+                    notCorrectList.add(idxX);
+                    break;
+                }
+            }
+        }
+
+        // filter the correct numbers out of the wordToGuess indexes
+        for (Integer number: indexAttemptNumbers) {
+            indexWordNumbers.remove(number);
+        }
+        // if the not correct list size is smaller or the same size
+        // as the letters left in the wordToGuess list return true.
+        // When the letter is present the list should correspond or the notCorrectList should be smaller
+
+        if(notCorrectList.size() <= indexWordNumbers.size()){
+            return true;
+        }
+        //
+        return false;
+    }
+
+    public boolean isLetterCorrect(String wordToGuess, String attempt, int index){
+        return wordToGuess.charAt(index) == attempt.charAt(index);
     }
 
     public String giveHint(){
@@ -99,6 +144,34 @@ public class Round {
 
     public int getCurrentWordLength(){
         return wordToGuess.length();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Round)) return false;
+        Round round = (Round) o;
+        return id == round.id &&
+                roundNumber == round.roundNumber &&
+                Objects.equals(wordToGuess, round.wordToGuess) &&
+                Objects.equals(hint, round.hint) &&
+                Objects.equals(attempts, round.attempts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roundNumber, wordToGuess, hint, attempts);
+    }
+
+    @Override
+    public String toString() {
+        return "Round{" +
+                "id=" + id +
+                ", roundNumber=" + roundNumber +
+                ", wordToGuess='" + wordToGuess + '\'' +
+                ", hint='" + hint + '\'' +
+                ", attempts=" + attempts +
+                '}';
     }
 
 }
