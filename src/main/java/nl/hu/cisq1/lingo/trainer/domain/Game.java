@@ -9,13 +9,13 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "game")
 public class Game {
     @Id
-    private String id;
+    @GeneratedValue
+    private long id;
 
     private int score;
 
@@ -28,7 +28,7 @@ public class Game {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Round> rounds;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
@@ -37,7 +37,6 @@ public class Game {
     }
 
     public Game(){
-        this.id = UUID.randomUUID().toString();
         this.score = 0;
         gameStatus = GameStatus.WAITING;
         rounds = new ArrayList<>();
@@ -50,7 +49,7 @@ public class Game {
         return null;
     }
 
-    public void startNewRound(String wordToGuess){
+    public boolean startNewRound(String wordToGuess){
         if(!isPlaying() && !isPlayerDefeated()){
             if (provideNextWordLength() != wordToGuess.length()) {
                 throw InvalidWordException.invalidLength();
@@ -58,6 +57,7 @@ public class Game {
                 Round newRound = new Round(wordToGuess, rounds.size() + 1);
                 rounds.add(newRound);
                 gameStatus = GameStatus.PLAYING;
+                return true;
             }
         }else{
             throw InvalidRoundException.roundActive();
@@ -83,8 +83,9 @@ public class Game {
     }
 
     public Progress showProgress(){
+
         Round round = getCurrentRound();
-        return new Progress(getScore(), round.getFeedbackHistory() , round.giveHint());
+        return new Progress(getScore(), round.getFeedbackHistory() , round.giveHint(), getId(), this.gameStatus);
     }
 
     public boolean isPlayerDefeated(){
@@ -110,5 +111,15 @@ public class Game {
             return 5;
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", score=" + score +
+                ", gameStatus=" + gameStatus +
+                ", rounds=" + rounds +
+                '}';
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-
+@Table(name="feedback")
 public class Feedback {
     @Id
     @GeneratedValue
@@ -66,4 +66,17 @@ public class Feedback {
                 Objects.equals(marks, feedback.marks);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, attempt, marks);
+    }
+
+    @Override
+    public String toString() {
+        return "Feedback{" +
+                "id=" + id +
+                ", attempt='" + attempt + '\'' +
+                ", marks=" + marks +
+                '}';
+    }
 }
