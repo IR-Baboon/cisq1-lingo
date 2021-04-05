@@ -131,6 +131,7 @@ class GameTest {
             );
         }
     }
+
     @Nested
     @DisplayName("Test progress return")
     class GameProgressTestClass {
@@ -150,13 +151,13 @@ class GameTest {
                 assertEquals(0, progress.getScore());
             }
             @Test
-            @DisplayName("test score in Progress after starting new Round")
+            @DisplayName("test hint in Progress after starting new Round")
             void testHintProgressBeginning(){
                 Progress progress = game.showProgress();
                 assertEquals("b....", progress.getHint());
             }
             @Test
-            @DisplayName("test score in Progress after starting new Round")
+            @DisplayName("test ammounts of feedback in Progress after starting new Round")
             void testFeedbackListProgressBeginning(){
                 Progress progress = game.showProgress();
                 assertEquals(0, progress.getFeedbackList().size());

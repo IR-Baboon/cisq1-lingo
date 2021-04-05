@@ -62,8 +62,8 @@ class RoundTest {
     static Stream<Arguments> provideGuessExamples() throws InvalidFeedBackException {
         return Stream.of(
                 Arguments.of("woord", "woord", new Feedback("woord",  List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT))),
-                Arguments.of("woord", "drooo", new Feedback("drooo",  List.of(Mark.PRESENT, Mark.PRESENT, Mark.CORRECT, Mark.PRESENT, Mark.ABSENT))),
-                Arguments.of("woord", "wroks", new Feedback("wroks",  List.of(Mark.CORRECT, Mark.PRESENT, Mark.CORRECT, Mark.ABSENT, Mark.ABSENT))),
+                Arguments.of("stene", "steen", new Feedback("steen",  List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.PRESENT, Mark.PRESENT))),
+                Arguments.of("woord", "wrokt", new Feedback("wrokt",  List.of(Mark.CORRECT, Mark.PRESENT, Mark.CORRECT, Mark.ABSENT, Mark.ABSENT))),
                 Arguments.of("woord", "boors", new Feedback("boors",  List.of(Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.ABSENT))),
                 Arguments.of("woord", "cysta", new Feedback("cysta",  List.of(Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT)))
         );
