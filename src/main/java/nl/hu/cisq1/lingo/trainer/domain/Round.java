@@ -103,7 +103,7 @@ public class Round {
         // If not, add index of the attempt list to the notCorrectList.
         for(Integer idxX: indexAttemptNumbers){
             for(Integer idxY : indexWordNumbers){
-                if(idxX == idxY){
+                if(idxX.equals(idxY)){
                     System.out.println(" ");
                     break;
                 }else if(!notCorrectList.contains(idxX)){
