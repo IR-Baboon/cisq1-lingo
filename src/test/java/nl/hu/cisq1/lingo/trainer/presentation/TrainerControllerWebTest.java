@@ -44,27 +44,27 @@ class TrainerControllerWebTest {
                 );
     }
 
-//    @Test
-//    @DisplayName("make a guess after a game has started")
-//    void guessWebTest() throws Exception {
-//        RequestBuilder gameRequest = MockMvcRequestBuilders.post("/trainer/newGame");
-//
-//        MockHttpServletResponse response = mockMvc.perform(gameRequest).andReturn().getResponse();
-//        Integer id = JsonPath.read(response.getContentAsString(), "$.gameID");
-//
-//        AttemptInputDTO input = new AttemptInputDTO();
-//        input.attempt = "doren";
-//        input.gameID = id;
-//        String body = new ObjectMapper().writeValueAsString(input);
-//
-//        RequestBuilder attemptRequest = MockMvcRequestBuilders.put("/trainer/attempt")
-//                .contentType(MediaType.APPLICATION_JSON).content(body);
-//
-//        mockMvc.perform(attemptRequest)
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.feedbackList", hasSize(1)))
-//            .andExpect(jsonPath("$.gameID", greaterThanOrEqualTo(0)));
-//    }
+    @Test
+    @DisplayName("make a guess after a game has started")
+    void guessWebTest() throws Exception {
+        RequestBuilder gameRequest = MockMvcRequestBuilders.post("/trainer/newGame");
+
+        MockHttpServletResponse response = mockMvc.perform(gameRequest).andReturn().getResponse();
+        Integer id = JsonPath.read(response.getContentAsString(), "$.gameID");
+
+        AttemptInputDTO input = new AttemptInputDTO();
+        input.attempt = "pizza";
+        input.gameID = id;
+        String body = new ObjectMapper().writeValueAsString(input);
+
+        RequestBuilder attemptRequest = MockMvcRequestBuilders.put("/trainer/attempt")
+                .contentType(MediaType.APPLICATION_JSON).content(body);
+
+        mockMvc.perform(attemptRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.feedbackList", hasSize(1)))
+            .andExpect(jsonPath("$.gameID", greaterThanOrEqualTo(0)));
+    }
 
     @Test
     @DisplayName("start a new game, check if starting new round gives bad request")
