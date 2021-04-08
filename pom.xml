@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.1</version>
+        <version>2.4.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>nl.hu.cisq1</groupId>
@@ -71,7 +71,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.4.2</version>
+                <version>2.4.4</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -89,7 +89,7 @@
                     pitest-maven
                 </artifactId>
                 <version>
-                    1.6.2
+                    1.6.4
                 </version>
                 <dependencies>
                     <dependency>
@@ -100,7 +100,7 @@
                             pitest-junit5-plugin
                         </artifactId>
                         <version>
-                            0.12
+                            0.14
                         </version>
 
                     </dependency>
