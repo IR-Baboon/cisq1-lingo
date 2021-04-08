@@ -1,12 +1,10 @@
 package nl.hu.cisq1.lingo.trainer.presentation;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Game;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.AttemptInputDTO;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.RoundInputDTO;
+import nl.hu.cisq1.lingo.trainer.presentation.DTO.AttemptInputDto;
+import nl.hu.cisq1.lingo.trainer.presentation.DTO.RoundInputDto;
 import nl.hu.cisq1.lingo.words.data.SpringWordRepository;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -70,7 +67,7 @@ class TrainerControllerIntegrationTest {
         when(gameRepository.findById(0)).thenReturn(Optional.of(game));
 
 
-        RoundInputDTO roundInputDTO = new RoundInputDTO();
+        RoundInputDto roundInputDTO = new RoundInputDto();
         roundInputDTO.gameID = 0;
         String body = new ObjectMapper().writeValueAsString(roundInputDTO);
 
@@ -98,7 +95,7 @@ class TrainerControllerIntegrationTest {
         when(gameRepository.findById(0)).thenReturn(Optional.of(game));
 
 
-        RoundInputDTO roundInputDTO = new RoundInputDTO();
+        RoundInputDto roundInputDTO = new RoundInputDto();
         roundInputDTO.gameID = 0;
         String body = new ObjectMapper().writeValueAsString(roundInputDTO);
 
@@ -123,7 +120,7 @@ class TrainerControllerIntegrationTest {
         when(gameRepository.findById(0)).thenReturn(Optional.of(game));
 
 
-        AttemptInputDTO input = new AttemptInputDTO();
+        AttemptInputDto input = new AttemptInputDto();
         input.attempt = "woord";
         input.gameID = 0;
         String body = new ObjectMapper().writeValueAsString(input);

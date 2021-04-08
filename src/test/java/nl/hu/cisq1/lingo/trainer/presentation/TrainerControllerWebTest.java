@@ -3,8 +3,8 @@ package nl.hu.cisq1.lingo.trainer.presentation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import nl.hu.cisq1.lingo.CiTestConfiguration;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.AttemptInputDTO;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.RoundInputDTO;
+import nl.hu.cisq1.lingo.trainer.presentation.DTO.AttemptInputDto;
+import nl.hu.cisq1.lingo.trainer.presentation.DTO.RoundInputDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ class TrainerControllerWebTest {
         MockHttpServletResponse response = mockMvc.perform(gameRequest).andReturn().getResponse();
         Integer id = JsonPath.read(response.getContentAsString(), "$.gameID");
 
-        AttemptInputDTO input = new AttemptInputDTO();
+        AttemptInputDto input = new AttemptInputDto();
         input.attempt = "pizza";
         input.gameID = id;
         String body = new ObjectMapper().writeValueAsString(input);
@@ -74,7 +74,7 @@ class TrainerControllerWebTest {
         MockHttpServletResponse response = mockMvc.perform(gameRequest).andReturn().getResponse();
         Integer id = JsonPath.read(response.getContentAsString(), "$.gameID");
 
-        RoundInputDTO input = new RoundInputDTO();
+        RoundInputDto input = new RoundInputDto();
         input.gameID = id;
         String body = new ObjectMapper().writeValueAsString(input);
 

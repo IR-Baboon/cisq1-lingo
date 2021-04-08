@@ -7,9 +7,9 @@ import nl.hu.cisq1.lingo.trainer.domain.Progress;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidGuessException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidRoundException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidWordException;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.AttemptInputDTO;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.ProgressOutputDTO;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.RoundInputDTO;
+import nl.hu.cisq1.lingo.trainer.presentation.DTO.AttemptInputDto;
+import nl.hu.cisq1.lingo.trainer.presentation.DTO.ProgressOutputDto;
+import nl.hu.cisq1.lingo.trainer.presentation.DTO.RoundInputDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +31,7 @@ public class TrainerController {
     public ResponseEntity startNewGame() {
         try {
             Progress progress =  this.trainerService.startNewGame();
-            ProgressOutputDTO output = new ProgressOutputDTO.Builder(progress.getGameID())
+            ProgressOutputDto output = new ProgressOutputDto.Builder(progress.getGameID())
                     .score(progress.getScore())
                     .gameStatus(progress.getGameStatus())
                     .hint(progress.getHint())
@@ -44,10 +44,10 @@ public class TrainerController {
     }
 
     @PutMapping("attempt")
-    public ResponseEntity makeGuess(@RequestBody AttemptInputDTO input){
+    public ResponseEntity makeGuess(@RequestBody AttemptInputDto input){
         try{
             Progress progress = this.trainerService.guess(input.attempt, input.gameID);
-            ProgressOutputDTO output = new ProgressOutputDTO.Builder(progress.getGameID())
+            ProgressOutputDto output = new ProgressOutputDto.Builder(progress.getGameID())
                     .score(progress.getScore())
                     .gameStatus(progress.getGameStatus())
                     .hint(progress.getHint())
@@ -59,10 +59,10 @@ public class TrainerController {
         }
     }
     @PutMapping("continue")
-    public ResponseEntity newRound(@RequestBody RoundInputDTO input){
+    public ResponseEntity<Object> newRound(@RequestBody RoundInputDto input){
         try{
             Progress progress = this.trainerService.startNewRound(input.gameID);
-            ProgressOutputDTO output = new ProgressOutputDTO.Builder(progress.getGameID())
+            ProgressOutputDto output = new ProgressOutputDto.Builder(progress.getGameID())
                     .score(progress.getScore())
                     .gameStatus(progress.getGameStatus())
                     .hint(progress.getHint())
@@ -74,10 +74,10 @@ public class TrainerController {
         }
     }
     @GetMapping("getGame")
-    public ResponseEntity getGameById(@RequestBody RoundInputDTO input){
+    public ResponseEntity getGameById(@RequestBody RoundInputDto input){
         try{
             Progress progress = this.trainerService.getGameProgress(input.gameID);
-            ProgressOutputDTO output = new ProgressOutputDTO.Builder(progress.getGameID())
+            ProgressOutputDto output = new ProgressOutputDto.Builder(progress.getGameID())
                     .score(progress.getScore())
                     .gameStatus(progress.getGameStatus())
                     .hint(progress.getHint())
@@ -90,10 +90,10 @@ public class TrainerController {
     }
     @GetMapping("getAll")
     public ResponseEntity getAllGames(){
-        List<ProgressOutputDTO> progressOutputDTOS = new ArrayList<>();
+        List<ProgressOutputDto> progressOutputDTOS = new ArrayList<>();
         List<Progress> progress = this.trainerService.getAllGames();
         for (Progress progres: progress) {
-            progressOutputDTOS.add( new ProgressOutputDTO.Builder(progres.getGameID())
+            progressOutputDTOS.add( new ProgressOutputDto.Builder(progres.getGameID())
                     .score(progres.getScore())
                     .gameStatus(progres.getGameStatus())
                     .hint(progres.getHint())

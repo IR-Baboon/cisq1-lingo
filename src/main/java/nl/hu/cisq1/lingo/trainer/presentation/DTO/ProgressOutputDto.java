@@ -3,17 +3,16 @@ package nl.hu.cisq1.lingo.trainer.presentation.DTO;
 import nl.hu.cisq1.lingo.trainer.domain.Feedback;
 import nl.hu.cisq1.lingo.trainer.domain.GameStatus;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ProgressOutputDTO {
+public class ProgressOutputDto {
     public long gameID;
     public long score;
     public GameStatus gameStatus;
     public String hint;
     public List<Feedback> feedbackList;
 
-    private ProgressOutputDTO() {
+    private ProgressOutputDto() {
     }
 
     public static class Builder{
@@ -27,28 +26,28 @@ public class ProgressOutputDTO {
             this.gameID = gameID;
         }
 
-        public ProgressOutputDTO.Builder score(long score){
+        public ProgressOutputDto.Builder score(long score){
             this.score = score;
             return this;
         }
 
-        public ProgressOutputDTO.Builder gameStatus(GameStatus gameStatus){
+        public ProgressOutputDto.Builder gameStatus(GameStatus gameStatus){
             this.gameStatus = gameStatus;
             return this;
         }
 
-        public ProgressOutputDTO.Builder hint(String hint){
+        public ProgressOutputDto.Builder hint(String hint){
             this.hint = hint;
             return this;
         }
 
-        public ProgressOutputDTO.Builder feedback(List<Feedback> feedbacks){
+        public ProgressOutputDto.Builder feedback(List<Feedback> feedbacks){
             this.feedbacklist = feedbacks;
             return this;
         }
 
-        public ProgressOutputDTO build(){
-            ProgressOutputDTO progressOutputDTO = new ProgressOutputDTO();
+        public ProgressOutputDto build(){
+            ProgressOutputDto progressOutputDTO = new ProgressOutputDto();
             progressOutputDTO.gameID = this.gameID;
             progressOutputDTO.score = this.score;
             progressOutputDTO.gameStatus = this.gameStatus;

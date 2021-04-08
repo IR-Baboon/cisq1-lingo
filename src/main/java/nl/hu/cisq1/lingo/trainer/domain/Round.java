@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name="round")
@@ -104,11 +103,9 @@ public class Round {
         for(Integer idxX: indexAttemptNumbers){
             for(Integer idxY : indexWordNumbers){
                 if(idxX.equals(idxY)){
-                    System.out.println(" ");
                     break;
                 }else if(!notCorrectList.contains(idxX)){
                     notCorrectList.add(idxX);
-                    break;
                 }
             }
         }
