@@ -53,7 +53,7 @@ class TrainerControllerWebTest {
         Integer id = JsonPath.read(response.getContentAsString(), "$.gameID");
 
         AttemptInputDTO input = new AttemptInputDTO();
-        input.attempt = "appel";
+        input.attempt = "doren";
         input.gameID = id;
         String body = new ObjectMapper().writeValueAsString(input);
 
