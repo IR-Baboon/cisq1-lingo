@@ -5,12 +5,12 @@ import java.util.Objects;
 
 public class Progress {
     private long gameID;
-    private int score;
+    private long score;
     private List<Feedback> feedbackList;
     private String hint;
     private GameStatus gameStatus;
 
-    public Progress(int score, List<Feedback> feedbacks, String hint, long gameID, GameStatus gameStatus){
+    public Progress(long score, List<Feedback> feedbacks, String hint, long gameID, GameStatus gameStatus){
         this.score = score;
         this.feedbackList = feedbacks;
         this.hint = hint;
@@ -18,7 +18,7 @@ public class Progress {
         this.gameStatus = gameStatus;
     }
 
-    public int getScore() {
+    public long getScore() {
         return score;
     }
 

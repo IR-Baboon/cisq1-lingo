@@ -10,4 +10,9 @@ public class InvalidWordException extends RuntimeException{
                 "Length wordToGuess is not right."
         );
     }
+    public static InvalidWordException wordDoesNotExist(){
+        return new InvalidWordException(
+                "guessed word does not exist."
+        );
+    }
 }

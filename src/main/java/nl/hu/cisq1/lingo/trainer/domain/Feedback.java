@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import net.minidev.json.JSONUtil;
 import nl.hu.cisq1.lingo.trainer.domain.converters.MarkConverter;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidFeedBackException;
 

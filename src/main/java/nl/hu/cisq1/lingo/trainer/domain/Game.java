@@ -85,7 +85,7 @@ public class Game {
     public Progress showProgress(){
 
         Round round = getCurrentRound();
-        return new Progress(getScore(), round.getFeedbackHistory() , round.giveHint(), getId(), this.gameStatus);
+        return new Progress(getScore(), round.getFeedbackHistory() , round.getHint(), getId(), this.gameStatus);
     }
 
     public boolean isPlayerDefeated(){
