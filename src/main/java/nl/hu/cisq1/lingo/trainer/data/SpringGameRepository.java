@@ -3,7 +3,6 @@ import nl.hu.cisq1.lingo.trainer.domain.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,5 +13,4 @@ import java.util.Optional;
 public interface SpringGameRepository extends JpaRepository<Game, Long> {
     @Query(nativeQuery=true, value="SELECT * FROM game g WHERE g.id = ?1 ")
     Optional<Game> findById(long id);
-    void deleteById(long id);
 }

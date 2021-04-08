@@ -49,7 +49,7 @@ public class Game {
         return null;
     }
 
-    public boolean startNewRound(String wordToGuess){
+    public void startNewRound(String wordToGuess){
         if(!isPlaying() && !isPlayerDefeated()){
             if (provideNextWordLength() != wordToGuess.length()) {
                 throw InvalidWordException.invalidLength();
@@ -57,7 +57,6 @@ public class Game {
                 Round newRound = new Round(wordToGuess, rounds.size() + 1);
                 rounds.add(newRound);
                 gameStatus = GameStatus.PLAYING;
-                return true;
             }
         }else{
             throw InvalidRoundException.roundActive();

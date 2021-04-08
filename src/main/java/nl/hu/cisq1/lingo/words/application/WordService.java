@@ -23,6 +23,7 @@ public class WordService {
                 .getValue();
     }
     public String provideWordCheck(String attempt) throws NotFoundException {
+        System.out.println(attempt);
         return this.wordRepository
                 .findByValue(attempt)
                 .orElseThrow(() -> new NotFoundException("woord niet gevonden"))
