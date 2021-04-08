@@ -89,7 +89,7 @@
                     pitest-maven
                 </artifactId>
                 <version>
-                    1.6.2
+                    1.6.4
                 </version>
                 <dependencies>
                     <dependency>
