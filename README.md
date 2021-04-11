@@ -49,67 +49,8 @@ Discussion of authentication and authorization.
 
 Counter-measures taken.
 
-## A3:2017 | Sensitive Data Exposure
-
-### Description
-
-Description here.
-
-### RiskAssessment of risk. 
-
-Discussion of authentication and authorization.
-
-
-### Counter-measures
-
-Counter-measures taken.
 
 ## A4:2017 | XML External Entities (XXE)
-
-### Description
-
-Description here.
-
-### RiskAssessment of risk. 
-
-Discussion of authentication and authorization.
-
-
-### Counter-measures
-
-Counter-measures taken.
-
-## A5:2017 | Broken Access Control
-
-### Description
-
-Description here.
-
-### RiskAssessment of risk. 
-
-Discussion of authentication and authorization.
-
-
-### Counter-measures
-
-Counter-measures taken.
-
-## A6:2017 | Security Misconfiguration
-
-### Description
-
-Description here.
-
-### RiskAssessment of risk. 
-
-Discussion of authentication and authorization.
-
-
-### Counter-measures
-
-Counter-measures taken.
-
-## A7:2017 | Cross-Site Scripting (XSS)
 
 ### Description
 
@@ -181,3 +122,9 @@ Discussion of authentication and authorization.
 ### Counter-measures
 
 Counter-measures taken.
+1.    Wat houdt de vulnerability in?
+2.    Hoe groot is het risico voor deze kwetsbaarheid binnen het project?
+    Wat als we authenticatie en autorisatie toevoegen?
+    
+     
+3.    Hoe wordt dit risico tegengegaan binnen het project?a.Als je denkt dat (een onderdeel van) een library of framework dit voor je oplost, probeer dan uit te zoeken welk onderdeel dit is en hoe deze dat tegengaat.  

@@ -7,9 +7,9 @@ import nl.hu.cisq1.lingo.trainer.domain.Progress;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidGuessException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidRoundException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidWordException;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.AttemptInputDto;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.ProgressOutputDto;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.RoundInputDto;
+import nl.hu.cisq1.lingo.trainer.presentation.dto.AttemptInputDto;
+import nl.hu.cisq1.lingo.trainer.presentation.dto.ProgressOutputDto;
+import nl.hu.cisq1.lingo.trainer.presentation.dto.RoundInputDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ public class TrainerController {
     }
 
     @PostMapping("newGame")
-    public ResponseEntity startNewGame() {
+    public ResponseEntity<Object> startNewGame() {
         try {
             Progress progress =  this.trainerService.startNewGame();
             ProgressOutputDto output = new ProgressOutputDto.Builder(progress.getGameID())
@@ -44,7 +44,7 @@ public class TrainerController {
     }
 
     @PutMapping("attempt")
-    public ResponseEntity makeGuess(@RequestBody AttemptInputDto input){
+    public ResponseEntity<Object> makeGuess(@RequestBody AttemptInputDto input){
         try{
             Progress progress = this.trainerService.guess(input.attempt, input.gameID);
             ProgressOutputDto output = new ProgressOutputDto.Builder(progress.getGameID())
@@ -74,7 +74,7 @@ public class TrainerController {
         }
     }
     @GetMapping("getGame")
-    public ResponseEntity getGameById(@RequestBody RoundInputDto input){
+    public ResponseEntity<Object> getGameById(@RequestBody RoundInputDto input){
         try{
             Progress progress = this.trainerService.getGameProgress(input.gameID);
             ProgressOutputDto output = new ProgressOutputDto.Builder(progress.getGameID())
@@ -89,7 +89,7 @@ public class TrainerController {
         }
     }
     @GetMapping("getAll")
-    public ResponseEntity getAllGames(){
+    public ResponseEntity<Object> getAllGames(){
         List<ProgressOutputDto> progressOutputDTOS = new ArrayList<>();
         List<Progress> progress = this.trainerService.getAllGames();
         for (Progress progres: progress) {

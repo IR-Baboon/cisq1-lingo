@@ -58,6 +58,11 @@ public class Feedback {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(attempt, marks);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Feedback)) return false;
@@ -65,18 +70,11 @@ public class Feedback {
         return Objects.equals(attempt, feedback.attempt) &&
                 Objects.equals(marks, feedback.marks);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, attempt, marks);
-    }
-
-    @Override
-    public String toString() {
-        return "Feedback{" +
-                "id=" + id +
-                ", attempt='" + attempt + '\'' +
-                ", marks=" + marks +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Feedback{" +
+//                ", attempt='" + attempt + '\'' +
+//                ", marks=" + marks +
+//                '}';
+//    }
 }

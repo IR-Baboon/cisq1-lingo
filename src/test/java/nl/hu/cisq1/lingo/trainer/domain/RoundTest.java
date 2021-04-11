@@ -36,6 +36,15 @@ class RoundTest {
         assertThrows(InvalidGuessException.noMoreGuesses().getClass(), () ->  round.guess("woord"));
     }
 
+
+    @Test
+    @DisplayName("rounds equal eachother")
+    void roundEquals() {
+        Round round = new Round("woord", 1);
+        Round round2 = new Round("woord", 1);
+        assertEquals(round, round);
+    }
+
     @Test
     @DisplayName("Start new Round and create hint to assert it is the starting hint")
     void giveHintWithNoAttempt() {

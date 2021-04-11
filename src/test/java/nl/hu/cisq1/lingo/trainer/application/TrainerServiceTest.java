@@ -3,18 +3,18 @@ package nl.hu.cisq1.lingo.trainer.application;
 import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.*;
+
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidRoundException;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidWordException;
 import nl.hu.cisq1.lingo.words.application.WordService;
-import nl.hu.cisq1.lingo.words.domain.Word;
+
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -131,5 +131,60 @@ class TrainerServiceTest {
         assertThrows(InvalidRoundException.roundActive().getClass(), () -> service.startNewRound(0));
     }
 
+    @Test
+    @DisplayName("Provides a list of progresses when requesting all games")
+    void providesAllProgresses() {
+        // define mockery
+        WordService wordService = mock(WordService.class);
+        SpringGameRepository mockRepository = mock(SpringGameRepository.class);
+        TrainerService service = new TrainerService(mockRepository, wordService);
+        // define when
+        when(wordService.provideRandomWord(5)).thenReturn("appel");
+        when(wordService.provideRandomWord(6)).thenReturn("appels");
+        Game game1 = new Game();
+        Game game2 = new Game();
+        Game game3 = new Game();
+        when(mockRepository.findAll()).thenReturn(List.of(game1, game2, game3));
+        // assert
+        System.out.println(service.getAllGames());
+        assertTrue(service.getAllGames().size() > 1);
+    }
 
+    @Test
+    @DisplayName("throw error when asking progress from non existing game")
+    void cannotProviceProgress() {
+        // define mockery
+        WordService wordService = mock(WordService.class);
+        SpringGameRepository mockRepository = mock(SpringGameRepository.class);
+        TrainerService service = new TrainerService(mockRepository, wordService);
+        // define when
+        when(wordService.provideRandomWord(5)).thenReturn("appel");
+        Game game = new Game();
+        // start new round with mocked word
+        game.startNewRound(wordService.provideRandomWord(game.provideNextWordLength()));
+        game.guess("apeel");
+        // mock game return
+        when(mockRepository.findById(0)).thenReturn(Optional.of(game));
+
+        assertThrows(NotFoundException.class, ()-> service.getGameProgress(1000000));
+    }
+
+    @Test
+    @DisplayName("throw word does not exist error when guessed word does not exists")
+    void throwErrorOnInvalidWord() {
+        // define mockery
+        WordService wordService = mock(WordService.class);
+        SpringGameRepository mockRepository = mock(SpringGameRepository.class);
+        TrainerService service = new TrainerService(mockRepository, wordService);
+        // define when
+        when(wordService.provideRandomWord(5)).thenReturn("appel");
+        Game game = new Game();
+        // start new round with mocked word
+        game.startNewRound(wordService.provideRandomWord(game.provideNextWordLength()));
+        game.guess("apeel");
+        // mock game return
+        when(mockRepository.findById(0)).thenReturn(Optional.of(game));
+
+        assertThrows(InvalidWordException.wordDoesNotExist().getClass(), ()-> service.guess("aarfd", game.getId()));
+    }
 }

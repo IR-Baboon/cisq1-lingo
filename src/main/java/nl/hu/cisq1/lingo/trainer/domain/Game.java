@@ -82,9 +82,11 @@ public class Game {
     }
 
     public Progress showProgress(){
-
         Round round = getCurrentRound();
-        return new Progress(getScore(), round.getFeedbackHistory() , round.getHint(), getId(), this.gameStatus);
+        if(round != null){
+            return new Progress(getScore(), round.getFeedbackHistory() , round.getHint(), getId(), this.gameStatus);
+        }
+        return new Progress(getScore(), List.of() , "no Hint yet", getId(), this.gameStatus);
     }
 
     public boolean isPlayerDefeated(){

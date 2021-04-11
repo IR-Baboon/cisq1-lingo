@@ -38,22 +38,22 @@ public class Progress {
         return gameStatus;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Progress)) return false;
         Progress progress = (Progress) o;
-        return gameID == progress.gameID &&
-                score == progress.score &&
+        return score == progress.score &&
                 Objects.equals(feedbackList, progress.feedbackList) &&
-                hint.equals(progress.hint) &&
+                Objects.equals(hint, progress.hint) &&
                 gameStatus == progress.gameStatus;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(gameID, score, feedbackList, hint, gameStatus);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(score, feedbackList, hint, gameStatus);
+//    }
 
     @Override
     public String toString() {

@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidGuessException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidRoundException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidWordException;
 import org.junit.jupiter.api.*;
@@ -34,16 +35,24 @@ class GameTest {
         void testStatusNotDefeated(){
             assertFalse(game.isPlayerDefeated());
         }
-
+        @Test
+        void testStatus(){
+            assertEquals(GameStatus.WAITING, game.getGameStatus());
+        }
         @Test
         void testScore(){
             assertEquals(0, game.getScore());
         }
-
+        @Test
+        void testHint(){
+            assertEquals("no Hint yet", game.showProgress().getHint());
+        }
         @Test
         void testCurrentRound(){
             assertNull(game.getCurrentRound());
         }
+
+
     }
 
     @Nested
@@ -61,11 +70,21 @@ class GameTest {
         void assertingThrows(){
             assertThrows(InvalidRoundException.class, ()-> game.startNewRound("tralal"));
         }
+        @Test
+        void assertingThrows2(){
+            game.guess("teste");
+            game.guess("teste");
+            game.guess("teste");
+            game.guess("teste");
+            game.guess("teste");
+            assertThrows(InvalidGuessException.playerDefeated().getClass(), ()->  game.guess("teste"));
+        }
 
         @Test
         void testStatusIsPlaying(){
             assertTrue(game.isPlaying());
         }
+
         @Test
         void testStatusIsNotPlaying(){
             game.guess("woord");
@@ -95,6 +114,26 @@ class GameTest {
         @Test
         void testScoreBefore(){
             assertEquals(0, game.getScore());
+        }
+        @Test
+        void testNextWordLengthAfter5(){
+            assertEquals(6, game.provideNextWordLength());
+        }
+
+        @Test
+        void testNextWordLengthAfter6(){
+            game.guess("woord");
+            game.startNewRound("appels");
+            assertEquals(7, game.provideNextWordLength());
+        }
+
+        @Test
+        void testNextWordLengthAfter7(){
+            game.guess("woord");
+            game.startNewRound("appels");
+            game.guess("appels");
+            game.startNewRound("appelen");
+            assertEquals(5, game.provideNextWordLength());
         }
 
         @Test
@@ -129,6 +168,11 @@ class GameTest {
                     Arguments.of(List.of("sloot","sloot","sloot","sloot","woord"), 5),
                     Arguments.of(List.of("sloot","sloot","sloot","sloot","sloot"), 0)
             );
+        }
+
+        @Test
+        void testCurrentRound(){
+            assertNotNull(game.getCurrentRound());
         }
     }
 

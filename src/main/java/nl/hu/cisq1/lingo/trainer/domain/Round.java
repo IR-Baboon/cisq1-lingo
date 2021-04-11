@@ -160,18 +160,18 @@ public class Round {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, roundNumber, wordToGuess, hint, attempts);
+        return Objects.hash(roundNumber, wordToGuess, hint, attempts);
     }
 
-    @Override
-    public String toString() {
-        return "Round{" +
-                "id=" + id +
-                ", roundNumber=" + roundNumber +
-                ", wordToGuess='" + wordToGuess + '\'' +
-                ", hint='" + hint + '\'' +
-                ", attempts=" + attempts +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Round{" +
+//                "id=" + id +
+//                ", roundNumber=" + roundNumber +
+//                ", wordToGuess='" + wordToGuess + '\'' +
+//                ", hint='" + hint + '\'' +
+//                ", attempts=" + attempts +
+//                '}';
+//    }
 
 }

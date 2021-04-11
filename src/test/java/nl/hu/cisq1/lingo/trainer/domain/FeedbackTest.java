@@ -50,6 +50,31 @@ class FeedbackTest {
     }
 
     @Test
+    @DisplayName("Two feedbacks equal eachother")
+    void feedbackEqual() throws InvalidFeedBackException {
+        Feedback feedback1 = new Feedback("woord", List.of(Mark.CORRECT, Mark.ABSENT,Mark.CORRECT, Mark.ABSENT,Mark.CORRECT));
+        Feedback feedback2 = new Feedback("woord", List.of(Mark.CORRECT, Mark.ABSENT,Mark.CORRECT, Mark.ABSENT,Mark.CORRECT));
+        assertEquals(feedback1, feedback2);
+
+    }
+
+    @Test
+    @DisplayName("Two feedbacks do not equal eachother")
+    void feedbacksNotEqual() throws InvalidFeedBackException {
+        Feedback feedback1 = new Feedback("woor1", List.of(Mark.CORRECT, Mark.ABSENT,Mark.CORRECT, Mark.ABSENT,Mark.CORRECT));
+        Feedback feedback2 = new Feedback("woord", List.of(Mark.CORRECT, Mark.ABSENT,Mark.CORRECT, Mark.ABSENT,Mark.CORRECT));
+        assertNotEquals(feedback1, feedback2);
+    }
+
+    @Test
+    @DisplayName("Two feedbacks do not equal eachother")
+    void feedbacksgiveFalseEquals() throws InvalidFeedBackException {
+        Round round = new Round();
+         Feedback feedback = new Feedback("woord", List.of(Mark.CORRECT, Mark.ABSENT,Mark.CORRECT, Mark.ABSENT,Mark.CORRECT));
+        assertNotEquals(round, feedback);
+    }
+
+    @Test
     @DisplayName("giveHint() throws InvalidFeedbackException exception when attempt length and hint length do not correspond")
     void giveHintThrowsExcpetion() throws InvalidFeedBackException {
         assertThrows( InvalidFeedBackException.class, () -> new Feedback("woorse", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT)).giveHint("wxxxx"));
